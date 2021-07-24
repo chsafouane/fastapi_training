@@ -1,11 +1,12 @@
 from collections import namedtuple
+from typing import Iterable, Optional
 
 Item = namedtuple("Item", "name, value")
 
-running_max = None
+running_max: Optional[int] = None
 
 
-def counter(items):
+def counter(items: Iterable[Item]) -> int:
     global running_max
     total = 0
 
