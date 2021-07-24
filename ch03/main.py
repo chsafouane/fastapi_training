@@ -1,14 +1,29 @@
+from typing import Optional
 import fastapi
 import uvicorn
 
 api = fastapi.FastAPI()
 
+
 @api.get("/api/calculate")
-def calculate(x:int, y:int, z:int):
-    value = (x+y)*z
+def calculate(x: int, y: int, z: Optional[int] = None):
+    if z == 0:
+        return fastapi.Response(
+            content='{"error":"Error: z cannot be zero"}',
+            media_type="application/json",
+            status_code=400
+        )
+
+    value = x + y
+    if z is not None:
+        value /= z
 
     return {
-        "value":value
+        "x": x,
+        "y": y,
+        "z": z,
+        "value": value
     }
+
 
 uvicorn.run(api)
