@@ -4,6 +4,19 @@ import uvicorn
 
 api = fastapi.FastAPI()
 
+@api.get("/")
+def index():
+    body = """
+    <html>
+    <p>Welcome to my first API using FastAPI</p>
+    <p>To use the calculator, try:
+    http://127.0.0.1:8000/api/calculate?x=2&y=3
+    </html>
+    """
+    return fastapi.responses.HTMLResponse(
+        content=body,
+        status_code=200
+    )
 
 @api.get("/api/calculate")
 def calculate(x: int, y: int, z: Optional[int] = None):
